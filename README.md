@@ -1,2 +1,9 @@
 # Dynamic-Programming-with-Bitmask-for-the-Assignment-Problem
 This project solves a 4×4 assignment problem — assigning 4 jobs to 4 machines to minimize total setup time — using a bitmask dynamic programming approach. 
+
+
+Each machine must be assigned exactly one job, and each job can only be assigned once. The cost matrix specifies the setup time for every machine-job combination, and the goal is to find the one-to-one assignment that minimizes total setup time.
+The bitmask DP represents the set of remaining available jobs as a binary integer, where each bit indicates whether a particular job has already been assigned. For example, a mask of 1111 in binary means all 4 jobs are still available. This compact representation allows the algorithm to efficiently track which jobs remain at each stage without enumerating full partial assignments explicitly.
+The algorithm works backward from machine 4 to machine 1. At each stage t and for each possible subset of remaining jobs, it evaluates assigning every available job to the current machine, adding the setup cost to the optimal future cost from the remaining subset. The minimum-cost job assignment and its value are recorded. The terminal condition sets cost to zero once all machines have been assigned.
+After backward induction, the optimal assignment is traced forward: starting with all jobs available, the algorithm greedily follows the recorded optimal decisions at each machine, removing the chosen job from the available set at each step.
+The project also includes a brute-force verification by enumerating all 4! = 24 possible permutations of job assignments, computing the total setup time for each, and confirming that the DP solution matches the global minimum. This dual approach validates the correctness of the bitmask DP and demonstrates its efficiency — while brute force scales as O(n!), the bitmask DP runs in O(n² · 2ⁿ), making it far more scalable for larger instances.
